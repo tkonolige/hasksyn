@@ -86,11 +86,18 @@ syn match hsOperator "\(\%^\#\!\)\@!\(\(\<[A-Z]\w*\)\@64<=\.\)\@!\(--\+\([^.%\~\
 " Include support for infix functions as operators
 syn match hsOperator "`[a-zA-Z0-9\.]\+`"
 
+" Match builtin operators
+syn match hsBuiltinOp "="
+syn match hsBuiltinOp "->"
+syn match hsBuiltinOp "<-"
+syn match hsBuiltinOp "::"
+syn match hsBuiltinOp "=>"
+
 " Highlight function/value names in type signatures.  Looks ahead to find a ::
 " after a name.  This allows whitespace before the name so that it can match
 " in a 'where,' but it won't match local type annotations on random little
 " things.
-syn match hsFunctionList "^\s*\(\<\(where\>\|let\>\)\@![a-z][a-zA-Z0-9']*[[:space:]\n,]\+\)*[a-z][a-zA-Z0-9']*[[:space:]\n]*::" contains=hsFunction
+syn match hsFunctionList "^\s*\(\<\(where\>\|let\>\)\@![a-z][a-zA-Z0-9']*[[:space:]\n,]\+\)*[a-z][a-zA-Z0-9']*[[:space:]\n]*\(::\)\@=" contains=hsFunction
 syn match hsFunction "\s*[a-z][a-zA-Z0-9']*\([[:space:]\n]*\(::\|,\)\)\@=" contained
 " Also support the style where the first where binding is on the same line as
 " the where keyword.
@@ -158,3 +165,4 @@ if version >= 508 || !exists('did_hs_syntax_inits')
 endif
 
 let b:current_syntax = "haskell"
+
